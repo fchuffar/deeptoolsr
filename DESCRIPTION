@@ -1,0 +1,13 @@
+Package: deeptoolsr
+Type: Package
+Title: deepTools R binding for R
+Description: A set of useful functions that bind deppTools main fucntions.
+Version: 0.0.0.9
+Date: 2018-10-15
+Authors@R: c(
+    person("Florent", "Chuffart", ,"florent.chuffart@gmail.com", c("aut", "cre", "cph"))
+    )
+Maintainer: Florent Chuffart <florent.chuffart@gmail.com>
+License: CeCILL
+LazyData: TRUE
+RoxygenNote: 5.0.1
