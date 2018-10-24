@@ -3,3 +3,6 @@
 export(dt_compute_matrix)
 export(dt_compute_matrix_scale)
 export(dt_plot_heatmap)
+export(get_transcriptogram)
+importFrom(utils,read.table)
+importFrom(utils,write.table)
