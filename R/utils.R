@@ -49,16 +49,19 @@ get_transcriptogram = function(exons_bed, coverage_bwfiles, bin_size=5, tmp_dir=
 #' @param y_max               deepTools `plotHeatmap` parameter.  
 #' @param y_min               deepTools `plotHeatmap` parameter.  
 #' @param sort_regions        deepTools `sortRegions` parameter.  
+#' @param color_map        deepTools `colorMap` parameter.  
+#' @param raw_args        some args that are rawly give to deepTools.  
 #' @param FORCE_EXEC a boolean that force call to deepTools `computeMatrix` function.
 #' @export
-dt_plot_heatmap = function (matrix_file, out_filename, y_max, y_min, sort_regions="no", FORCE_EXEC=FALSE) {
+dt_plot_heatmap = function (matrix_file, out_filename, y_max, y_min, sort_regions="no", color_map="bwr", raw_args="", FORCE_EXEC=FALSE) {
   command = "plotHeatmap"  
   args = paste(
     c(
       "--matrixFile"                , matrix_file, 
       "--outFileName"             , out_filename,     
-      "--colorMap"                , "bwr", 
-      "--sortRegions"             , sort_regions
+      "--colorMap"                , color_map, 
+      "--sortRegions"             , sort_regions, 
+      raw_args
     ), 
   collapse = " ")
   if (!missing(y_max)) {
@@ -68,7 +71,7 @@ dt_plot_heatmap = function (matrix_file, out_filename, y_max, y_min, sort_region
     args = paste(c(args, "--yMin", y_min), collapse=" ")
   }
   print(paste(command, args))
-  if (substr(Sys.info()["nodename"],1,4)=="luke" | FORCE_EXEC) {
+  if (substr(Sys.info()["nodename"],1,4)=="luke" | substr(Sys.info()["nodename"],1,4)=="dahu" | FORCE_EXEC) {
     system2(command=command, args=args)
   } else {
     print(paste("Skiping deep tools calls on ", Sys.info()["nodename"]))
@@ -87,29 +90,31 @@ dt_plot_heatmap = function (matrix_file, out_filename, y_max, y_min, sort_region
 #' @param after_region_start_length  deepTools `computeMatrix` parameter.  
 #' @param number_of_processors       deepTools `computeMatrix` parameter.  
 #' @param blacklist_filename         deepTools `computeMatrix` parameter.  
+#' @param sort_regions               deepTools `computeMatrix` parameter.  
+#' @param reference_point            deepTools `computeMatrix` parameter.  
 #' @param FORCE_EXEC a boolean that force call to deepTools `computeMatrix` function.
 #' @export
-dt_compute_matrix = function (regions_filename, score_filename, out_filename, bin_size=50, before_region_start_length=5000, after_region_start_length=5000, number_of_processors=12, blacklist_filename=NULL, FORCE_EXEC=FALSE) {
+dt_compute_matrix = function (regions_filename, score_filename, out_filename, bin_size=50, before_region_start_length=5000, after_region_start_length=5000, number_of_processors=12, sort_regions="keep", reference_point="TSS", blacklist_filename=NULL, FORCE_EXEC=FALSE) {
   command = "computeMatrix"  
   args = paste(
     c("reference-point", 
       "-R"                        , regions_filename, 
       "-S"                        , score_filename, 
       "--outFileName"             , out_filename,     
-      "--referencePoint"          , "TSS", 
+      "--referencePoint"          , reference_point, 
       "--binSize"                 , bin_size,  
       "--beforeRegionStartLength" , before_region_start_length,
       "--afterRegionStartLength"  , after_region_start_length,
       "--numberOfProcessors"      , number_of_processors,  
-      "--sortRegions"             , "keep" 
-
+      "--sortRegions"             , sort_regions,
+      NULL 
     ), 
   collapse = " ")
   if (!is.null(blacklist_filename)) {
     args = paste(args, "--blackListFileName" , blacklist_filename) 
   }
   print(paste(command, args))
-  if (substr(Sys.info()["nodename"],1,4)=="luke" | FORCE_EXEC) {
+  if (substr(Sys.info()["nodename"],1,4)=="luke" | substr(Sys.info()["nodename"],1,4)=="dahu" | FORCE_EXEC) {
     system2(command=command, args=args)
   } else {
     print(paste("Skiping deep tools calls on ", Sys.info()["nodename"]))
@@ -130,9 +135,10 @@ dt_compute_matrix = function (regions_filename, score_filename, out_filename, bi
 #' @param region_body_length         deepTools `computeMatrix` parameter.  
 #' @param number_of_processors       deepTools `computeMatrix` parameter.  
 #' @param blacklist_filename         deepTools `computeMatrix` parameter.  
+#' @param sort_regions        deepTools `sortRegions` parameter.  
 #' @param FORCE_EXEC a boolean that force call to deepTools `computeMatrix` function.
 #' @export
-dt_compute_matrix_scale = function (regions_filename, score_filename, out_filename, bin_size=50, before_region_start_length=0, after_region_start_length=0, region_body_length, number_of_processors=12, blacklist_filename=NULL, FORCE_EXEC=FALSE) {
+dt_compute_matrix_scale = function (regions_filename, score_filename, out_filename, bin_size=50, before_region_start_length=0, after_region_start_length=0, region_body_length, number_of_processors=12, sort_regions="keep", blacklist_filename=NULL, FORCE_EXEC=FALSE) {
   command = "computeMatrix"  
   args = paste(
     c("scale-regions", 
@@ -146,7 +152,7 @@ dt_compute_matrix_scale = function (regions_filename, score_filename, out_filena
       "--beforeRegionStartLength" , before_region_start_length,
       "--afterRegionStartLength"  , after_region_start_length,
       "--numberOfProcessors"      , number_of_processors,  
-      "--sortRegions"             , "keep" 
+      "--sortRegions"             , sort_regions 
 
     ), 
   collapse = " ")
@@ -154,7 +160,7 @@ dt_compute_matrix_scale = function (regions_filename, score_filename, out_filena
     args = paste(args, "--blackListFileName" , blacklist_filename) 
   }
   print(paste(command, args))
-  if (substr(Sys.info()["nodename"],1,4)=="luke" | FORCE_EXEC) {
+  if (substr(Sys.info()["nodename"],1,4)=="luke" | substr(Sys.info()["nodename"],1,4)=="dahu" | FORCE_EXEC) {
     system2(command=command, args=args)
   } else {
     print(paste("Skiping deep tools calls on ", Sys.info()["nodename"]))

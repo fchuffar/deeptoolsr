@@ -7,6 +7,7 @@
 dt_compute_matrix(regions_filename, score_filename, out_filename,
   bin_size = 50, before_region_start_length = 5000,
   after_region_start_length = 5000, number_of_processors = 12,
+  sort_regions = "keep", reference_point = "TSS",
   blacklist_filename = NULL, FORCE_EXEC = FALSE)
 }
 \arguments{
@@ -24,6 +25,10 @@ dt_compute_matrix(regions_filename, score_filename, out_filename,
 
 \item{number_of_processors}{deepTools `computeMatrix` parameter.}
 
+\item{sort_regions}{deepTools `computeMatrix` parameter.}
+
+\item{reference_point}{deepTools `computeMatrix` parameter.}
+
 \item{blacklist_filename}{deepTools `computeMatrix` parameter.}
 
 \item{FORCE_EXEC}{a boolean that force call to deepTools `computeMatrix` function.}
@@ -31,4 +36,3 @@ dt_compute_matrix(regions_filename, score_filename, out_filename,
 \description{
 This function binds deepTools `computeMatrix` function.
 }
-

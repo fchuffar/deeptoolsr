@@ -19,4 +19,3 @@ get_transcriptogram(exons_bed, coverage_bwfiles, bin_size = 5,
 \description{
 This function computes  RNA-Seq signal matrix of a gene from coverage signal.
 }
-

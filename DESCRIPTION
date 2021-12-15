@@ -10,4 +10,4 @@ Authors@R: c(
 Maintainer: Florent Chuffart <florent.chuffart@gmail.com>
 License: CeCILL
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.1

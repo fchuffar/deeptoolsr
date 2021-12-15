@@ -4,7 +4,8 @@
 \alias{dt_plot_heatmap}
 \title{Binding of deepTools `plotHeatmap` Function.}
 \usage{
-dt_plot_heatmap(matrix_file, out_filename, y_max, y_min, sort_regions = "no",
+dt_plot_heatmap(matrix_file, out_filename, y_max, y_min,
+  sort_regions = "no", color_map = "bwr", raw_args = "",
   FORCE_EXEC = FALSE)
 }
 \arguments{
@@ -18,9 +19,12 @@ dt_plot_heatmap(matrix_file, out_filename, y_max, y_min, sort_regions = "no",
 
 \item{sort_regions}{deepTools `sortRegions` parameter.}
 
+\item{color_map}{deepTools `colorMap` parameter.}
+
+\item{raw_args}{some args that are rawly give to deepTools.}
+
 \item{FORCE_EXEC}{a boolean that force call to deepTools `computeMatrix` function.}
 }
 \description{
 This function binds deepTools `plotHeatmap` function.
 }
-
